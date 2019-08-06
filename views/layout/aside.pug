@@ -1,0 +1,83 @@
+aside.main-sidebar
+  // sidebar: style can be found in sidebar.less
+  section.sidebar
+    // Sidebar Menu
+    ul.sidebar-menu(data-widget='tree')
+      li.treeview
+        a(href='#')
+          i.fa.fa-file
+          span Post
+          span.pull-right-container
+            i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          li
+            a(href='create-post.html') Create post
+          li
+            a(href='published-posts.html') Published posts
+          li
+            a(href='draft-posts.html')
+              span Draft posts
+              span.pull-right-container
+                span.label.bg-green.pull-right 4
+      li.treeview
+        a(href='#')
+          i.fa.fa-comment
+          span Thought
+          span.pull-right-container
+            i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          li
+            a(href='approved-comments.html') Approved comments
+          li
+            a(href='pending-comments.html')
+              span Pending comments
+              span.pull-right-container
+                span.label.bg-green.pull-right 4
+          li
+            a(href='approved-replies.html') Approved replies
+          li
+            a(href='pending-replies.html')
+              span Pending replies
+              span.pull-right-container
+                span.label.bg-green.pull-right 4
+          li
+            a(href='visitors-list.html') Visitors list
+      li.treeview
+        a(href='#')
+          i.fa.fa-tag
+          span Tag
+          span.pull-right-container
+            i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          li
+            a(href='create-tag.html') Create tag
+          li
+            a(href='tags-list.html') Tags list
+      li.treeview
+        a(href='#')
+          i.fa.fa-file-image-o
+          span Image
+          span.pull-right-container
+            i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          li
+            a(href='upload-image.html') Upload image
+          li
+            a(href='images-list.html') Images list
+      li.active.treeview
+        a(href='#')
+          i.fa.fa-gear
+          span Setting
+          span.pull-right-container
+            i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          li
+            a(href='header.html') Header
+          li
+            a(href='footer.html') Footer
+          li
+            a(href='homepage.html') Homepage
+          li
+            a(href='seo.html') SEO
+    // /.sidebar-menu
+  // /.sidebar

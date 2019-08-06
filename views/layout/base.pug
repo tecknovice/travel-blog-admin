@@ -1,0 +1,12 @@
+doctype html
+html
+    head
+        include head.pug
+    body.skin-green.sidebar-mini
+        .wrapper
+            include header.pug
+            include aside.pug
+            .content-wrapper
+                block content
+            include footer.pug
+        include script.pug

@@ -1,0 +1,38 @@
+header.main-header
+  // Logo
+  a.logo(href='/')
+    // mini logo for sidebar mini 50x50 pixels
+    span.logo-mini
+      img(src='/images/logo.png', alt='Logo')
+    // logo for regular state and mobile devices
+    span.logo-lg
+      img(src='/images/logo.png', alt='Logo')
+  // Header Navbar
+  nav.navbar.navbar-static-top(role='navigation')
+    // Sidebar toggle button
+    a.sidebar-toggle(href='#', data-toggle='push-menu', role='button')
+      span.sr-only Toggle navigation
+    // Navbar Right Menu
+    .navbar-custom-menu
+      ul.nav.navbar-nav
+        // User Account Menu
+        li.dropdown.user.user-menu
+          // Menu Toggle Button
+          a.dropdown-toggle(href='#', data-toggle='dropdown')
+            // The user image in the navbar
+            img.user-image(src='/images/default-avatar.jpg', alt='User Image')
+            // hidden-xs hides the username on small devices so only the image appears.
+            span.hidden-xs HungNV
+          ul.dropdown-menu
+            // The user image in the menu
+            li.user-header
+              img.img-circle(src='/images/default-avatar.jpg', alt='User Image')
+              p
+                | Nguyen Van Hung
+                small tecknovice@gmail.com
+            // Menu Footer
+            li.user-footer
+              .pull-left
+                a.btn.btn-default.btn-flat(href='profile.html') Profile
+              .pull-right
+                a.btn.btn-default.btn-flat(href='login.html') Sign out
