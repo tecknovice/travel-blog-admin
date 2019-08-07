@@ -1,0 +1,42 @@
+extends layout/base
+
+block title
+ title=title
+
+block page_css
+ link(rel='stylesheet', href='/stylesheets/upload-image.css')
+
+block content
+ section.content-header
+  h1=title
+ section.content.container-fluid
+  form(method='POST', enctype='multipart/form-data')
+   .form-group
+    button.btn.btn-primary(type='submit', name='Upload') Upload
+    button.btn.btn-danger(type='reset') Cancel
+   .form-group
+    label Image 
+    input#image(type='file', name='image', required)
+    label.upload-button(type='button', for='image')
+     i.fa.fa-cloud-upload(style='font-size: 5rem;')
+   .form-group
+    label(for='display-image') Preview
+    .image-wrapper
+     img#display-image
+
+block script
+ script.
+  function readURL(input) {
+  if (input.files && input.files[0]) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+  $('#display-image').attr('src', e.target.result);
+  }
+  reader.readAsDataURL(input.files[0]);
+  }
+  }
+  $("#image").change(function() {
+  readURL(this);
+  });
+ 
+

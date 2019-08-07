@@ -1,13 +1,13 @@
 exports.create_get = function(req, res) {
     // res.send('NOT IMPLEMENTED: post create GET');
-    res.render('post_form',{title: 'post create GET'})
+    res.render('post-form',{title: 'Create post'})
 };
 exports.create_post = function(req, res) {
     res.send('NOT IMPLEMENTED: post create POST');
 };
 exports.update_get = function(req, res) {
     // res.send('NOT IMPLEMENTED: post update GET');
-    res.render('post_form')
+    res.render('post-form')
 };
 exports.update_post = function(req, res) {
     res.send('NOT IMPLEMENTED: post update POST');
