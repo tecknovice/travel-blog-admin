@@ -1,7 +1,7 @@
 const Image = require('../models/Image')
 const multer = require('multer')
 const imageSize = require('image-size')
-const { query, validationResult } = require('express-validator');
+const { body, query, validationResult } = require('express-validator');
 
 const debug = require('debug')('travel-blog-admin:imageController')
 
@@ -47,6 +47,7 @@ exports.upload_post = [
         }
     }
 ]
+
 exports.list = [
     query('page', 'page must be a positive integer').optional().isInt({ min: 1 }),
     async function (req, res, next) {
@@ -69,9 +70,18 @@ exports.list = [
             const totalImage = await Image.estimatedDocumentCount();
             const totalPage = Math.ceil(totalImage / imagePerPage)
             res.render('image-list', { title: 'Images list', images, page, totalPage })
+            
         } catch (error) {
             return next(error)
         }
-        res.render('image-list', { title: 'Images list' })
     }
 ]
+
+exports.delete = 
+    async function(req,res,next){
+        debug('delete:req',JSON.parse(req.body.list)[0])
+        // res.send('image delete POST')
+        // res.redirect('/')
+        res.render('image-list', { title: 'Images list' })  
+    }
+

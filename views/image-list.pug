@@ -18,7 +18,7 @@ block content
   .row
    .col-xs-12.col-sm-12
     input#checkbox-header(type="checkbox")
-    button.btn.btn-danger(type="button") Delete
+    button.btn.btn-danger#delete(type="button") Delete
   .row
    each image in images
     .col-lg-3.col-sm-6
@@ -40,7 +40,7 @@ block content
           strong Dimensions
          span=`${image.dimensions[0]}x${image.dimensions[1]}`
          .box-tools.pull-right
-          input.checkbox-row(type="checkbox")
+          input.checkbox-row(type="checkbox",id=`${image._id}`)
    else
     .col-xs-12.col-sm-12
      div.text-center No images
@@ -83,6 +83,7 @@ block script
  script(src='/adminlte/plugins/iCheck/icheck.min.js')
  script.
   $(function () {
+  let checkedImages = []
   $('#checkbox-header, .checkbox-row').iCheck({
   checkboxClass: 'icheckbox_minimal-green'
   })
@@ -91,5 +92,15 @@ block script
   });
   $('#checkbox-header').on('ifUnchecked', function (event) {
   $('.checkbox-row').iCheck('uncheck');
+  });
+  $('.checkbox-row').on('ifChecked', function (event) {
+  checkedImages.push($(this).attr('id'))
+  console.log(checkedImages)
+  });
+  $('.checkbox-row').on('ifUnchecked', function (event) {
+  const id = $(this).attr('id')
+  const index = checkedImages.findIndex(item => item == id)
+  checkedImages.splice(index,1)
+  console.log(checkedImages)
   });
   })
