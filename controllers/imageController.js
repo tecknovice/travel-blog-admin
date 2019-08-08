@@ -1,7 +1,6 @@
 const Image = require('../models/Image')
 const multer = require('multer')
 const imageSize = require('image-size')
-var createError = require('http-errors');
 const { query, validationResult } = require('express-validator');
 
 const debug = require('debug')('travel-blog-admin:imageController')
@@ -51,23 +50,28 @@ exports.upload_post = [
 exports.list = [
     query('page', 'page must be a positive integer').optional().isInt({ min: 1 }),
     async function (req, res, next) {
-        const limit = 12
+        const imagePerPage = 8
         let page
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            debug('list:errors', errors.array()[0])
             res.redirect('/image')
         }
         else {
             page = req.query.page || 1
         }
         try {
-            const images = await Image.find().skip((page - 1) * limit).limit(limit).sort({ name: 'desc' })
-            res.render('image-list', { title: 'Images list', images })
+            // const images = await Image.find().skip((page - 1) * imagePerPage).limit(imagePerPage).sort({ name: 'desc' })
+            const images = await Image.find({}, null, {
+                skip: (page - 1) * imagePerPage, 
+                limit: imagePerPage, 
+                sort: { name: 'desc' } 
+            })
+            const totalImage = await Image.estimatedDocumentCount();
+            const totalPage = Math.ceil(totalImage / imagePerPage)
+            res.render('image-list', { title: 'Images list', images, page, totalPage })
         } catch (error) {
             return next(error)
         }
-        debug('list:req.query.page', req.query.page)
         res.render('image-list', { title: 'Images list' })
     }
 ]
