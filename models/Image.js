@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const imageSchema = new mongoose.Schema({
+    title:{
+        type: String,
+        required: true,
+        trim: true
+    },
     name: {
         type: String,
         required: true,
@@ -16,9 +21,7 @@ const imageSchema = new mongoose.Schema({
         type: [Number],
         required: true
     }
-}, {
-        timestamps: true
-    })
+})
 const Image = mongoose.model('Image', imageSchema)
 
 module.exports = Image

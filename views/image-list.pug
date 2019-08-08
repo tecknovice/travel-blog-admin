@@ -30,15 +30,15 @@ block content
         .image-detail
          div
           span
-           strong File name
-          span=image.name
+           strong Image title&nbsp;
+          span=image.title
          div
           span
-           strong File size
+           strong Image size&nbsp;
           span=image.size
          div
           span
-           strong Dimensions
+           strong Dimensions&nbsp;
           span=`${image.dimensions[0]}x${image.dimensions[1]}`
           .box-tools.pull-right
            input.checkbox-row(type="checkbox",name="list",value=`${image._id}`)
@@ -84,7 +84,6 @@ block script
  script(src='/adminlte/plugins/iCheck/icheck.min.js')
  script.
   $(function () {
-  let checkedImages = []
   $('#checkbox-header, .checkbox-row').iCheck({
   checkboxClass: 'icheckbox_minimal-green'
   })
@@ -93,15 +92,5 @@ block script
   });
   $('#checkbox-header').on('ifUnchecked', function (event) {
   $('.checkbox-row').iCheck('uncheck');
-  });
-  $('.checkbox-row').on('ifChecked', function (event) {
-  checkedImages.push($(this).attr('id'))
-  console.log(checkedImages)
-  });
-  $('.checkbox-row').on('ifUnchecked', function (event) {
-  const id = $(this).attr('id')
-  const index = checkedImages.findIndex(item => item == id)
-  checkedImages.splice(index,1)
-  console.log(checkedImages)
   });
   })

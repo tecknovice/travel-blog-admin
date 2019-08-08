@@ -1,10 +1,10 @@
-const Image = require('../models/Image')
 const multer = require('multer')
-const imageSize = require('image-size')
+const dimensions = require('image-size')
 const fs = require('fs')
-const { body, query, validationResult } = require('express-validator');
-
+const { query, validationResult } = require('express-validator');
 const debug = require('debug')('travel-blog-admin:imageController')
+
+const Image = require('../models/Image')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -33,16 +33,17 @@ exports.upload_get = function (req, res) {
 exports.upload_post = [
     upload.single('image'),
     async (req, res, next) => {
-        // debug('upload_post:req.file',req.file)
-        const dimensions = imageSize(req.file.path)
+        debug('upload_post:req.file',req.file)
+        const d = dimensions(req.file.path)
         const image = new Image({
+            title: req.file.originalname,
             name: req.file.filename,
             size: req.file.size,
-            dimensions: [dimensions.width, dimensions.height]
+            dimensions: [d.width, d.height]
         })
         try {
             await image.save()
-            res.redirect('/image')
+            res.redirect('/image/upload')
         } catch (error) {
             return next(error)
         }
