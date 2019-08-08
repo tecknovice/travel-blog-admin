@@ -1,6 +1,7 @@
 const Image = require('../models/Image')
 const multer = require('multer')
 const imageSize = require('image-size')
+const fs = require('fs')
 const { body, query, validationResult } = require('express-validator');
 
 const debug = require('debug')('travel-blog-admin:imageController')
@@ -51,7 +52,7 @@ exports.upload_post = [
 exports.list = [
     query('page', 'page must be a positive integer').optional().isInt({ min: 1 }),
     async function (req, res, next) {
-        const imagePerPage = 8
+        const imagePerPage = 4
         let page
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -63,14 +64,14 @@ exports.list = [
         try {
             // const images = await Image.find().skip((page - 1) * imagePerPage).limit(imagePerPage).sort({ name: 'desc' })
             const images = await Image.find({}, null, {
-                skip: (page - 1) * imagePerPage, 
-                limit: imagePerPage, 
-                sort: { name: 'desc' } 
+                skip: (page - 1) * imagePerPage,
+                limit: imagePerPage,
+                sort: { name: 'desc' }
             })
             const totalImage = await Image.estimatedDocumentCount();
             const totalPage = Math.ceil(totalImage / imagePerPage)
             res.render('image-list', { title: 'Images list', images, page, totalPage })
-            
+
         } catch (error) {
             return next(error)
         }
@@ -78,10 +79,22 @@ exports.list = [
 ]
 
 exports.delete = 
-    async function(req,res,next){
-        debug('delete:req',JSON.parse(req.body.list)[0])
-        // res.send('image delete POST')
-        // res.redirect('/')
-        res.render('image-list', { title: 'Images list' })  
+    async function (req, res, next) {
+        if (req.body.list) {
+            try {
+                const images = await Image.find({ _id: { $in: req.body.list } })
+                await Image.deleteMany({ _id: { $in: req.body.list } })
+                debug('delete:images',images)
+                images.forEach(image => {
+                    const fileName = image.name
+                    fs.unlinkSync(`public/images/${fileName}`)
+                });
+            } catch (error) {
+                return next(error)
+            }
+        }
+        res.redirect('/image')
     }
+
+
 
