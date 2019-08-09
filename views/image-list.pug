@@ -12,14 +12,13 @@ block page_css
  link(rel='stylesheet' href='/stylesheets/image-list.css')
 
 block content
- section.content-header
-  h1=title
  section.content.container
   form#form(method="POST",action="/image/delete")
    .row
     .col-xs-12.col-sm-12
      input#checkbox-header(type="checkbox")
      button.btn.btn-danger(type="submit") Delete
+     input(type="text",style="display:none;",name="page",value=page)
    .row
     each image in images
      .col-lg-3.col-sm-6
@@ -41,7 +40,7 @@ block content
            strong Dimensions&nbsp;
           span=`${image.dimensions[0]}x${image.dimensions[1]}`
           .box-tools.pull-right
-           input.checkbox-row(type="checkbox",name="list",value=`${image._id}`)
+           input.checkbox-row(type="checkbox",name="list",value=image._id)
     else
      .col-xs-12.col-sm-12
       div.text-center No images

@@ -1,11 +1,11 @@
 const multer = require('multer')
 const dimensions = require('image-size')
 const fs = require('fs')
-const { query, validationResult } = require('express-validator');
+const { body, query, validationResult } = require('express-validator');
 const debug = require('debug')('travel-blog-admin:imageController')
 
 const Image = require('../models/Image')
-
+const imagePerPage = 4
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/images/')
@@ -33,7 +33,7 @@ exports.upload_get = function (req, res) {
 exports.upload_post = [
     upload.single('image'),
     async (req, res, next) => {
-        debug('upload_post:req.file',req.file)
+        debug('upload_post:req.file', req.file)
         const d = dimensions(req.file.path)
         const image = new Image({
             title: req.file.originalname,
@@ -43,7 +43,7 @@ exports.upload_post = [
         })
         try {
             await image.save()
-            res.redirect('/image/upload')
+            res.render('image-form', { title: 'Upload image', success_message: 'Uploaded successfully!' })
         } catch (error) {
             return next(error)
         }
@@ -53,7 +53,6 @@ exports.upload_post = [
 exports.list = [
     query('page', 'page must be a positive integer').optional().isInt({ min: 1 }),
     async function (req, res, next) {
-        const imagePerPage = 4
         let page
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -79,14 +78,23 @@ exports.list = [
     }
 ]
 
-exports.delete = 
+exports.delete = [
+    body('page', 'page must be a positive integer').optional().isInt({ min: 1 }),
     async function (req, res, next) {
+        let page
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.redirect(`/image?page=1`)
+        }
+        else {
+            page = req.query.page || 1
+        }
         if (req.body.list) {
             try {
-                const images = await Image.find({ _id: { $in: req.body.list } })
+                //delete images
+                const delete_images = await Image.find({ _id: { $in: req.body.list } })
                 await Image.deleteMany({ _id: { $in: req.body.list } })
-                debug('delete:images',images)
-                images.forEach(image => {
+                delete_images.forEach(image => {
                     const fileName = image.name
                     fs.unlinkSync(`public/images/${fileName}`)
                 });
@@ -94,8 +102,10 @@ exports.delete =
                 return next(error)
             }
         }
-        res.redirect('/image')
+        res.redirect(`/image?page=${page}`)
     }
+]
+
 
 
 

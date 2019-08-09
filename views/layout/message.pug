@@ -1,0 +1,10 @@
+if success_message
+    .alert.alert-success.alert-dismissible.fade.in(role='alert')
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+            span(aria-hidden='true') &times;
+        strong=success_message
+if warning_message
+    .alert.alert-warning.alert-dismissible.fade.in(role='alert')
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+            span(aria-hidden='true') &times;
+        strong=warning_message
