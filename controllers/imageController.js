@@ -50,7 +50,7 @@ exports.upload_post = [
     }
 ]
 
-exports.list = [
+exports.list_get = [
     query('page', 'page must be a positive integer').optional().isInt({ min: 1 }),
     async function (req, res, next) {
         let page
@@ -71,6 +71,34 @@ exports.list = [
             const totalImage = await Image.estimatedDocumentCount();
             const totalPage = Math.ceil(totalImage / imagePerPage)
             res.render('image-list', { title: 'Images list', images, page, totalPage })
+
+        } catch (error) {
+            return next(error)
+        }
+    }
+]
+
+exports.list_post = [
+    body('page', 'page must be a positive integer').optional().isInt({ min: 1 }),
+    async function (req, res, next) {
+        let page
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.send({errors:errors.toString()})
+        }
+        else {
+            page = req.body.page || 1
+        }
+        try {
+            // const images = await Image.find().skip((page - 1) * imagePerPage).limit(imagePerPage).sort({ name: 'desc' })
+            const images = await Image.find({}, null, {
+                skip: (page - 1) * imagePerPage,
+                limit: imagePerPage,
+                sort: { name: 'desc' }
+            })
+            const totalImage = await Image.estimatedDocumentCount();
+            const totalPage = Math.ceil(totalImage / imagePerPage)
+            res.send( { images, page, totalPage })
 
         } catch (error) {
             return next(error)

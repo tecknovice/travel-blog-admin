@@ -8,6 +8,7 @@ require('./config/db')
 const indexRouter = require('./routes/index');
 const postRouter = require('./routes/postRouter')
 const imageRouter = require('./routes/imageRouter')
+const tagRouter = require('./routes/tagRouter')
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/post', postRouter)
 app.use('/image', imageRouter)
+app.use('/tag',tagRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,110 @@
+//css
+link(rel='stylesheet' href='/adminlte/plugins/iCheck/flat/green.css')
+// Modal
+#image-modal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel')
+  .modal-dialog.modal-lg(role='document')
+    .modal-content(style="background-color: #ecf0f5 !important;")
+      .modal-header
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        h4#myModalLabel.modal-title Images List
+      #data.modal-body
+      .modal-footer
+        button.btn.btn-default(type='button' data-dismiss='modal') Close
+        button.btn.btn-primary#select-image(type='button') Select
+//script
+// load image script
+script(src='/javascripts/image.js')
+// load blueimp template engine
+script(src='https://cdnjs.cloudflare.com/ajax/libs/blueimp-JavaScript-Templates/3.12.0/js/tmpl.min.js')
+// iCheck
+script(src='/adminlte/plugins/iCheck/icheck.min.js')
+script#tmpl-definition(type='text/x-tmpl').
+  <div class="row">
+    {% for (var i=0; i<o.images.length; i++) { %}
+    <div class="col-md-4 col-sm-6">
+      <div class="box box-solid">
+          <div class="box-body">
+              <div class="image-wrapper">
+                  <img src="/images/{%=o.images[i].name%}" alt="{%=o.images[i].name%}">
+              </div>
+              <div class="image-detail">
+                  <div>
+                      <span> <strong>File name</strong> </span>
+                      <span>{%=o.images[i].title%}</span>
+                  </div>
+                  <div>
+                      <span> <strong>File size</strong> </span>
+                      <span>{%=o.images[i].size%}</span>
+                  </div>
+                  <div>
+                      <span> <strong>Dimensions</strong> </span>
+                      <span>{%=o.images[i].dimensions[0]%}x{%=o.images[i].dimensions[1]%}</span>
+                      <div class="box-tools pull-right">
+                          <input type="radio" name="image" value="{%=o.images[i]._id%}" class="radiobox">
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    {% } %}
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <nav aria-label="Page navigation">
+          <ul class="pagination">
+              {% if (o.page == 1) { %}
+                <li class="disabled"><a href="/image?page=1" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+              {% } else { %}                
+              <li><a href="/image?page=1" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+              {% } %}
+              {% if (o.page>1) { %}
+                <li><a href="/image?page={%=Number(o.page)-1%}">{%=Number(o.page)-1%}</a></li>
+              {% } %}
+              <li class="active"><a id="mylink" href="/image?page={%=o.page%}">{%=o.page%}</a></li>
+              {% if (o.page<o.totalPage) { %}
+                <li><a href="/image?page={%=Number(o.page)+1%}">{%=Number(o.page)+1%}</a></li>
+              {% } %}
+              {% if (o.page == o.totalPage) { %}
+                <li class="disabled"><a href="/image?page={%=o.totalPage%}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+              {% } else { %}                
+                <li><a href="/image?page={%=o.totalPage%}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+              {% } %}              
+          </ul>
+      </nav>
+    </div>
+  </div>
+script.
+  let currentPage = 1, totalPage
+  let images = []
+  $(function() {
+      function loadImage(page = 1) {
+          $.post('/image', {page}, (data) => {
+              currentPage = data.page
+              totalPage = data.totalPage
+              images = data.images
+              $('#data').html(tmpl('tmpl-definition', data))
+              $('.radiobox').iCheck({
+                  radioClass: 'iradio_flat-green'
+              })
+              $('.image-wrapper').find('img').each(function () {
+                  var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
+                  $(this).addClass(imgClass);
+              })
+              $(".pagination a").click(function(evt){
+                const link = $(this).attr('href')
+                const selectPage = parseInt(link.split('=')[1])
+                loadImage(selectPage)
+                evt.preventDefault();
+                return false;  
+              })
+          })
+      }
+      $('#image-modal').on('show.bs.modal', function (e) {
+        loadImage(currentPage)
+      })
+      $('#select-image').click(function(e){
+        
+      })
+  })

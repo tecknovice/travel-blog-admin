@@ -1,0 +1,8 @@
+.form-group
+  label(for='title') Tag title
+  input#title.form-control(type='text' name='title' placeholder='title')
+.form-group
+  label Tag image 
+  input(type='text' name='image' value='' style='display:none;')
+  #display-image.image-wrapper(style='margin: 1rem 0;')  
+  button.btn.btn-primary#open-image-modal(type='button' data-toggle='modal' data-target='#image-modal') Select image
