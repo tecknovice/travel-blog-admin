@@ -7,7 +7,7 @@ block content
  section.content.container-fluid
   form(method='POST', enctype='multipart/form-data')
    .form-group
-    button.btn.btn-primary(type='submit', name='Upload') Upload
+    button.btn.btn-primary(type='submit') Upload
     button.btn.btn-danger(type='reset') Cancel
    .form-group
     label Image 
@@ -15,9 +15,9 @@ block content
     label.upload-button(type='button', for='image')
      i.fa.fa-cloud-upload(style='font-size: 5rem;')
    .form-group
-    label(for='display-image') Preview
+    label Preview
     .image-wrapper
-     img#display-image
+     img#display-image(style="max-width:100% !important;max-height:100%  !important; width:auto !important; height: auto !important;")
 
 block script
  script.
