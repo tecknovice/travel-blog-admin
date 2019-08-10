@@ -1,0 +1,74 @@
+extends layout/base
+
+block plugins_css
+    // iCheck for checkboxes and radio inputs
+    link(rel='stylesheet' href='/adminlte/plugins/iCheck/minimal/green.css')
+    // DataTables
+    link(rel='stylesheet' href='/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')
+block content
+  section.content.container
+    if (tags)
+        form#form(method="POST",action="/tag/delete")
+            .box.box-solid
+                .box-header
+                    button.btn.btn-danger(type='submit') Delete
+                .box-body.table-responsive
+                    table#data-table.table.table-hover.table-bordered
+                        thead
+                            tr
+                                th
+                                    input#checkbox-header(type='checkbox')
+                                th Tag name
+                                th Tag image
+                                th Total posts
+                        tbody
+                            each tag in tags
+                                tr
+                                    td
+                                        input.checkbox-row(type='checkbox',name='tags',value=tag._id)
+                                    td
+                                        a(href=`/tag/update/${tag._id}`)=tag.name
+                                    td
+                                        .image-wrapper
+                                            img(src=`/images/${tag.image.name}` alt=tag.image.title)
+                                    td=tag.total_posts||0
+    else
+        .center-block.bg-info.text-center No tags
+            
+block script
+    script(src='/javascripts/image.js')
+    // iCheck
+    script(src='/adminlte/plugins/iCheck/icheck.min.js')
+    // DataTables
+    script(src='/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js')
+    script(src='/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')
+    script.
+        $(function () {
+            $('#checkbox-header, .checkbox-row').iCheck({
+                checkboxClass: 'icheckbox_minimal-green'
+            })
+            $('#checkbox-header').on('ifChecked', function (event) {
+                $('.checkbox-row').iCheck('check');
+            });
+            $('#checkbox-header').on('ifUnchecked', function (event) {
+                $('.checkbox-row').iCheck('uncheck');
+            });
+            $('#data-table').DataTable({
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 },
+                    { "orderable": false, "targets": 2 },
+                    { "width": "243px", "targets": 2 }
+                ]
+            })
+
+            // Create an observer instance linked to the callback function
+            const observer = new MutationObserver(function (mutationsList, observer) {
+                if ($('#checkbox-header').parent().attr('aria-checked') == 'true') $('.checkbox-row').iCheck('check');
+                else $('.checkbox-row').iCheck('uncheck');
+            });
+
+            // Start observing the target node for configured mutations
+            observer.observe(document.getElementById('data-table_paginate'), {
+                childList: true
+            });
+        })

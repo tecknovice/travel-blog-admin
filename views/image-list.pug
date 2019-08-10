@@ -25,11 +25,11 @@ block content
         .image-detail
          div
           span
-           strong Image title&nbsp;
+           strong Title&nbsp;
           span=image.title
          div
           span
-           strong Image size&nbsp;
+           strong Size&nbsp;
           span=image.size
          div
           span
@@ -39,7 +39,7 @@ block content
            input.checkbox-row(type="checkbox",name="list",value=image._id)
     else
      .col-xs-12.col-sm-12
-      div.text-center No images
+      .center-block.bg-info.text-center No images
   if totalPage > 1
    .row
     .col-xs-12.col-sm-12

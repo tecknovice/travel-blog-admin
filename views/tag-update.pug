@@ -1,0 +1,12 @@
+extends layout/base
+
+block content
+ section.content.container-fluid
+  form(method="POST")
+   .form-group
+    button.btn.btn-primary(type='submit') Update
+    button.btn.btn-danger(type='reset') Cancel
+   include tag-form
+
+block modules
+  include layout/image-modal.pug

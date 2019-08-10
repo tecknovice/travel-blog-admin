@@ -5,7 +5,7 @@ const { body, query, validationResult } = require('express-validator');
 const debug = require('debug')('travel-blog-admin:imageController')
 
 const Image = require('../models/Image')
-const imagePerPage = 4
+const imagePerPage = 8
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/images/')
