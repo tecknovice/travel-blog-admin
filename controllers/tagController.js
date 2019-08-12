@@ -78,11 +78,11 @@ exports.delete = async function (req, res, next) {
         try {
             //delete tags
             await Tag.deleteMany({ _id: { $in: req.body.tags } })
+            await list(req,res,next)
         } catch (error) {
             return next(error)
         }
     }
-    res.redirect(`/tag`)
 }
 exports.list = async function (req, res, next) {
     const tags = await Tag.find().populate({

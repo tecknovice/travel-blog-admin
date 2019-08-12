@@ -1,0 +1,69 @@
+// iCheck for checkboxes and radio inputs
+link(rel='stylesheet' href='/adminlte/plugins/iCheck/minimal/green.css')
+// DataTables
+link(rel='stylesheet' href='/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')
+
+table#data-table.table.table-hover.table-bordered
+    thead
+        tr
+            th
+                input#checkbox-header(type='checkbox')
+            th Title
+            th Tag(s)
+            th Status
+            if (status=='published')
+                th Published time
+    tbody
+        each post in posts
+            tr
+                td
+                    input.checkbox-row(type='checkbox',name='posts',value=post._id)
+                td
+                    a(href=`/post/update/${post._id}`)=post.title
+                td
+                    each tag in post.tags
+                        a(href=`/tag/update/${tag._id}`)=tag.name
+                        span &nbsp;
+                td
+                    div
+                        i.fa.fa-eye
+                        span 9999
+                    div
+                        i.fa.fa-comment
+                        span 9999
+                if (status=='published')
+                    td=post.publishedTime
+
+// iCheck
+script(src='/adminlte/plugins/iCheck/icheck.min.js')
+// DataTables
+script(src='/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js')
+script(src='/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')
+script.
+    window.onload = function(){
+        $('#checkbox-header, .checkbox-row').iCheck({
+            checkboxClass: 'icheckbox_minimal-green'
+        })
+        $('#checkbox-header').on('ifChecked', function (event) {
+            $('.checkbox-row').iCheck('check');
+        });
+        $('#checkbox-header').on('ifUnchecked', function (event) {
+            $('.checkbox-row').iCheck('uncheck');
+        });
+        $('#data-table').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": 0 }
+            ]
+        })
+
+        // Create an observer instance linked to the callback function
+        const observer = new MutationObserver(function (mutationsList, observer) {
+            if ($('#checkbox-header').parent().attr('aria-checked') == 'true') $('.checkbox-row').iCheck('check');
+            else $('.checkbox-row').iCheck('uncheck');
+        });
+
+        // Start observing the target node for configured mutations
+        observer.observe(document.getElementById('data-table_paginate'), {
+            childList: true
+        });
+    };

@@ -13,15 +13,20 @@ block content
         button.btn.btn-primary(type='submit', name='status' value="published") Publish
         button.btn.btn-primary(type='submit', name='status' value="draft" ) Draft
         button.btn.btn-danger(type='reset') Cancel
+        if(post)
+          span.bg-info.text-info=post.status
       .form-group
         label(for='title') Title
-        input#title.form-control(type='text', name='title', placeholder='title' required)
+        input#title.form-control(type='text', name='title', placeholder='title' value=(post!=undefined?post.title:'') required)
       .form-group
         label(for='tags') Tags
         select#tags.form-control.select2(multiple='multiple', name='tags', data-placeholder='Select tags', style='width: 100%;')
           if (tags)
             each tag in tags
-              option(value=tag._id)=tag.name  
+              if(tag.selected=='true')
+                option(value=tag._id selected)=tag.name
+              else
+                option(value=tag._id)=tag.name
       .form-group
         label(for='image') Tag image 
         input(type='text' name='image' id="image" value=(image!=undefined?image._id:'') style='display:none;')
@@ -29,7 +34,10 @@ block content
           img#display-image(src=(image!=undefined?'/images/'+image.name:'')  style="max-width:100% !important;max-height:100%  !important; width:auto !important; height: auto !important;")
         button.btn.btn-primary#open-image-modal(type='button' data-toggle='modal' data-target='#image-modal') Select cover image
       .form-group
-        textarea#editor(name='content', rows='10', cols='80')
+        if(post!=undefined)
+          textarea#editor(name='content', rows='10', cols='80')=post.content
+        else
+          textarea#editor(name='content', rows='10', cols='80')
 
 block script
   script(src='/adminlte/bower_components/select2/dist/js/select2.full.min.js')

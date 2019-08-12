@@ -1,1 +1,14 @@
 extends layout/base
+
+block content
+    section.content.container-fluid
+        if(posts)
+            form#form(method='POST')
+                .box.box-solid
+                    .box-header
+                        button.btn.btn-primary(type='submit' name='action' value='draft') Revert to draft
+                        button.btn.btn-danger(type='submit'  name='action' value='delete') Delete
+                    .box-body.table-responsive
+                        include post-list.pug 
+        else
+            .center-block.bg-info.text-center No published posts   
