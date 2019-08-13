@@ -1,0 +1,59 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  title Admin Dashboard - Log in
+  // Tell the browser to be responsive to screen width
+  meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport')
+  // Bootstrap 3.3.7
+  link(rel='stylesheet' href='/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')
+  // Font Awesome
+  link(rel='stylesheet' href='/adminlte/bower_components/font-awesome/css/font-awesome.min.css')
+  // Ionicons
+  link(rel='stylesheet' href='/adminlte/bower_components/Ionicons/css/ionicons.min.css')
+  // Theme style
+  link(rel='stylesheet' href='/adminlte/dist/css/AdminLTE.min.css')
+  // iCheck
+  link(rel='stylesheet' href='/adminlte/plugins/iCheck/square/green.css')
+  link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic')
+body.hold-transition.login-page
+    .login-box
+      .login-box-body
+        .login-logo
+          img(src='/images/logo-black.png' alt='logo')
+        p.login-box-msg Sign in to start your session
+        form(action='index.html' method='POST')
+          .form-group.has-feedback
+            input.form-control(type='email' placeholder='Email')
+            span.glyphicon.glyphicon-envelope.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='password' placeholder='Password')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .row
+            .col-xs-8
+              .checkbox.icheck
+                label
+                  input(type='checkbox')
+                  |  Remember Me
+            // /.col
+            .col-xs-4
+              button.btn.btn-primary.btn-block.btn-flat(type='submit') Sign In
+            // /.col
+        a(href='forgot-password.html') I forgot my password
+        br
+      // /.login-box-body
+    // /.login-box
+    // jQuery 3
+    script(src='/adminlte/bower_components/jquery/dist/jquery.min.js')
+    // Bootstrap 3.3.7
+    script(src='/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')
+    // iCheck
+    script(src='/adminlte/plugins/iCheck/icheck.min.js')
+    script.
+      $(function () {
+      $('input').iCheck({
+      checkboxClass: 'icheckbox_square-green',
+      radioClass: 'iradio_square-green',
+      increaseArea: '20%' /* optional */
+      });
+      });

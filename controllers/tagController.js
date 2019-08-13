@@ -5,7 +5,7 @@ exports.create_get = function (req, res, next) {
     res.render('tag-create', { title: 'Create tag' })
 }
 exports.create_post = [
-    body('name', 'name must be at least 1 character').isString().isLength({ min: 1 }),
+    body('name', 'name must be at least 1 character').isLength({ min: 1 }),
     body('image_id').isLength({ min: 24, max: 24 }).withMessage('image_id must be 24 characters')
         .matches(/^[A-Fa-f0-9]*$/).withMessage('image_id only contain number and A-F a-f 0-9'),
     async function (req, res, next) {

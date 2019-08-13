@@ -1,0 +1,66 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  title AdminLTE 2 | Registration Page
+  // Tell the browser to be responsive to screen width
+  meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport')
+  // Bootstrap 3.3.7
+  link(rel='stylesheet' href='/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')
+  // Font Awesome
+  link(rel='stylesheet' href='/adminlte/bower_components/font-awesome/css/font-awesome.min.css')
+  // Ionicons
+  link(rel='stylesheet' href='/adminlte/bower_components/Ionicons/css/ionicons.min.css')
+  // Theme style
+  link(rel='stylesheet' href='/adminlte/dist/css/AdminLTE.min.css')
+  // iCheck
+  link(rel='stylesheet' href='/adminlte/plugins/iCheck/square/blue.css')
+  // Google Font
+  link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic')
+body.hold-transition.register-page
+    .register-box
+      .register-logo
+        a(href='/adminlte/index2.html')
+          b Admin
+          | LTE
+      .register-box-body
+        p.login-box-msg Register
+        form(method='post')
+          .form-group.has-feedback
+            input.form-control(type='text' placeholder='Full name')
+            span.glyphicon.glyphicon-user.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='email' placeholder='Email')
+            span.glyphicon.glyphicon-envelope.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='password' placeholder='Password')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .form-group.has-feedback
+            input.form-control(type='password' placeholder='Confirm password')
+            span.glyphicon.glyphicon-log-in.form-control-feedback
+          .row
+            .col-xs-8
+              .checkbox.icheck
+                label
+                  input(type='checkbox')
+                  |  I agree to the 
+                  a(href='#') terms
+            // /.col
+            .col-xs-4
+              button.btn.btn-primary.btn-block.btn-flat(type='submit') Register
+            // /.col
+        a.text-center(href='/user/login') Login
+    // jQuery 3
+    script(src='/adminlte/bower_components/jquery/dist/jquery.min.js')
+    // Bootstrap 3.3.7
+    script(src='/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')
+    // iCheck
+    script(src='/adminlte/plugins/iCheck/icheck.min.js')
+    script.
+      $(function () {
+      $('input').iCheck({
+      checkboxClass: 'icheckbox_square-green',
+      radioClass: 'iradio_square-green',
+      increaseArea: '20%' /* optional */
+      });
+      });
