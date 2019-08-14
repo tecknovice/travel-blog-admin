@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// const flash = require('express-flash')
 require('./config/db')
 
 const indexRouter = require('./routes/index');
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+// app.use(flash())
 
 const {session, passport, authRouter} = require('./config/auth')
 // Authentication related middleware.

@@ -10,3 +10,10 @@ if warning_messages
         each msg in warning_messages
             div
                 strong=msg
+if errors
+    .alert.alert-warning.alert-dismissible.fade.in(role='alert')
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+            span(aria-hidden='true') &times;
+        each error in errors
+            div
+                strong=error.msg

@@ -20,19 +20,18 @@ header.main-header
           // Menu Toggle Button
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             // The user image in the navbar
-            img.user-image(src='/images/default-avatar.jpg', alt='User Image')
+            img.user-image(src=(current_user.avatar!=undefined?`/images/${avatar.name}`:'/images/default-avatar.jpg'), alt='User Image')
             // hidden-xs hides the username on small devices so only the image appears.
-            span.hidden-xs Nguyen Van Hung
+            span.hidden-xs=current_user.name
           ul.dropdown-menu
             // The user image in the menu
             li.user-header
               img.img-circle(src='/images/default-avatar.jpg', alt='User Image')
-              p
-                | Nguyen Van Hung
-                small tecknovice@gmail.com
+              p=current_user.name
+                small=current_user.email
             // Menu Footer
             li.user-footer
               .pull-left
-                a.btn.btn-default.btn-flat(href='profile.html') Profile
+                a.btn.btn-default.btn-flat(href='/user/profile') Profile
               .pull-right
-                a.btn.btn-default.btn-flat(href='login.html') Sign out
+                a.btn.btn-default.btn-flat(href='/user/logout') Sign out

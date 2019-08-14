@@ -20,21 +20,27 @@ const session = ExpressSession({
 
 // Configure the local strategy for use by Passport.
 passport.use(
-    new LocalStrategy(function (username, password, callback) {
-        User.findOne({ username: username }, function (err, user) {
-            if (err) {
-                return callback(err);
-            }
-            if (!user) {
-                return callback(null, false, { message: 'Incorrect username. ' });
-            }
-            if (!user.validatePassword(password)) {
-                return callback(null, false, { message: 'Incorrect password.' });
-            }
-            return callback(null, user);
-        });
-    })
-);
+    new LocalStrategy(
+        {
+            usernameField: 'email',
+            passwordField: 'password'
+        },
+        function (email, password, callback) {
+            User.findOne({ email }, function (err, user) {
+                if (err) {
+                    return callback(err);
+                }
+                if (!user) {
+                    return callback(null, false, { message: 'Incorrect email. ' });
+                }
+                if (!user.validatePassword(password)) {
+                    return callback(null, false, { message: 'Incorrect password.' });
+                }
+                return callback(null, user);
+            });
+        }
+    )
+)
 
 // Configure Passport authenticated session persistence.
 passport.serializeUser(function (user, callback) {

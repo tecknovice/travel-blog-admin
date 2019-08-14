@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcryptjs = require('bcryptjs')
+const debug = require('debug')('travel-blog-admin:User')
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -18,28 +19,23 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    avatar:{
+    avatar: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Image'
+        ref: 'Image'
     }
 })
 
 
-userSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email })
-    if (!user) throw new Error('Unable to login')
-    const isMatch = await bcryptjs.compare(password, user.password)
-    if (!isMatch) throw new Error('Unable to login')
-    else return user
+userSchema.methods.validatePassword = function(password){
+    debug('password',password)
+    debug('this',this)
+    return bcryptjs.compareSync(password, this.password)
 }
 
-userSchema.pre('save', async function (next) {
-    const user = this
-    if (user.isModified('password')) {
-        user.password = await bcryptjs.hash(user.password, 10)
-    }
-    next()
-})
+// Instance method for hashing user-typed password.
+userSchema.methods.setPassword = async function (password) {
+    this.password = await bcryptjs.hash(password, 8)
+}
 const User = mongoose.model('User', userSchema)
 
 module.exports = User
