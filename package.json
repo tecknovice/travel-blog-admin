@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "env-cmd -f ./config/config.env nodemon ./bin/www",
+    "start": "env-cmd -f ./config/config.env node ./bin/www",
+    "grunt": "grunt",
     "all": "npm-run-all --parallel dev grunt",
-    "dev": "env-cmd -f ./config/dev.env nodemon ./bin/www",
-    "grunt": "grunt"
+    "build":"npm-run-all --parallel start grunt"
   },
   "dependencies": {
     "async": "^3.1.0",
