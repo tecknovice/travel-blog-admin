@@ -11,6 +11,7 @@
   "dependencies": {
     "async": "^3.1.0",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
     "connect-mongo": "^3.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -18,6 +19,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.16.2",
     "express-validator": "^6.1.1",
+    "helmet": "^3.20.0",
     "http-errors": "~1.6.3",
     "image-size": "^0.7.4",
     "moment": "^2.24.0",
