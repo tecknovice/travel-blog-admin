@@ -8,7 +8,7 @@ const Image = require('../models/Image')
 const imagePerPage = 8
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/images/')
+        cb(null, process.cwd() + '/public/images/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname)
@@ -33,7 +33,7 @@ exports.upload_get = function (req, res) {
 exports.upload_post = [
     upload.single('image'),
     async (req, res, next) => {
-        debug('upload_post:req.file', req.file)
+        debug('upload_post:cwd',process.cwd())
         const d = dimensions(req.file.path)
         const image = new Image({
             title: req.file.originalname,
