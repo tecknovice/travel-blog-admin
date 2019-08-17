@@ -1,5 +1,9 @@
+const path = require('path');
 const mozjpeg = require('imagemin-mozjpeg');
-
+const debug = require('debug')('travel-blog-admin:grunt')
+const source = path.join(__dirname,'public','images','/')
+const dest = path.join(__dirname,'public','grunt','images','/') 
+const files = source + '*.{png,jpg,jpeg,gif}'
 module.exports = function (grunt) {
 
     // Project configuration.
@@ -17,19 +21,21 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,                  // Enable dynamic expansion
-                    cwd: './public/images/',                   // Src matches are relative to this path
+                    cwd:  source,                   // Src matches are relative to this path
                     src: ['**/*.{png,jpg,jpeg,gif}'],   // Actual patterns to match
-                    dest: './public/grunt/images/'                  // Destination path prefix
+                    dest:  dest                  // Destination path prefix
                 }]
             }
         },
         watch: {
-            files: 'public/images/*.{png,jpg,jpeg,gif}',
+            files: [files],
             tasks: ['imagemin']
           }
         
 
     });
+
+    debug('files',files)
 
     // Load the plugin that provides the "uglify" task.
     //grunt.loadNpmTasks('grunt-contrib-uglify');

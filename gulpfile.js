@@ -1,18 +1,42 @@
+const path = require('path')
 const gulp = require('gulp')
 const imagemin = require('gulp-imagemin')
 const imageminMozjpeg = require('imagemin-mozjpeg')
-function imgSquash() {
-    return gulp.src("./public/images/*")
+const source = path.join(__dirname, 'public', 'images', '*')
+const dest = path.join(__dirname, 'public', 'gulp', 'images')
+const debug = require('debug')('travel-blog-admin:gulp')
+const globby = require('globby')
+const del = require('del')
+
+Array.prototype.diff = function (a) {
+    return this.filter(function (i) { return a.indexOf(i) < 0; });
+};
+
+async function imageclean() {
+
+    let sourceFiles = await globby(source)
+    sourceFiles = sourceFiles.map(file => file.match(/[^/]+$/)[0])
+    let destFiles = await globby(dest)
+    destFiles = destFiles.map(file => file.match(/[^/]+$/)[0])
+
+    let deleteFiles = destFiles.diff(sourceFiles)
+    deleteFiles = deleteFiles.map(file => path.join(dest, file))
+    const deletedPaths = await del(deleteFiles)
+
+}
+function imageminify() {
+    return gulp.src(source)
         .pipe(imagemin([
             imagemin.jpegtran({
                 progressive: true
             }),
             imageminMozjpeg()
         ]))
-        .pipe(gulp.dest("./public/gulp/images"));
+        .pipe(gulp.dest(dest));
 }
-gulp.task("imgSquash", imgSquash)
+gulp.task("imageminify", imageminify)
+gulp.task("imageclean", imageclean)
 gulp.task("watch", () => {
-    gulp.watch("./public/images/*", imgSquash);
+    gulp.watch(source, gulp.series('imageminify', 'imageclean'));
 })
-gulp.task("default", gulp.series("imgSquash", "watch"))
+gulp.task("default", gulp.series("imageminify", 'imageclean', "watch"))
