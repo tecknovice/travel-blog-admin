@@ -56,7 +56,7 @@ passport.deserializeUser(function (id, callback) {
     });
 });
 
-const authRouter = router.use(/^(?!.*(\/user\/login|\/user\/register))/, function (req, res, next) {
+const authRouter = router.use(/^(?!.*(\/user\/login))/, function (req, res, next) {
     if (req.isAuthenticated()) {
         // Authenticated. Proceed to next function in the middleware chain.
         return next();

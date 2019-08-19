@@ -3,9 +3,12 @@ const { body, param, validationResult } = require('express-validator');
 const passport = require('passport');
 const User = require('../models/User')
 
-exports.login_get = async function (req, res, next) {
-    res.render('user-login', { title: 'Login' })
-}
+exports.login_get = [
+    isAlreadyLoggedIn,
+    async function (req, res, next) {
+        res.render('user-login', { title: 'Login' })
+    }
+]
 
 exports.login_post = [
     passport.authenticate('local', {
@@ -24,9 +27,13 @@ exports.logout_get = [
     }
 ]
 
-exports.create_get = async function (req, res, next) {
-    res.render('user-register', { title: 'Register' })
-}
+exports.create_get = [
+    isAlreadyLoggedIn,
+    async function (req, res, next) {
+        res.render('user-register', { title: 'Register' })
+    }
+]
+
 exports.create_post = [
     body('name').isLength({ min: 1 }).withMessage('name is required'),
     body('email').isEmail().withMessage('email is not valid'),
@@ -61,3 +68,13 @@ exports.create_post = [
         }
     }
 ]
+
+// Function to prevent user who already logged in from
+// accessing login and register routes.
+function isAlreadyLoggedIn(req, res, next) {
+    if (req.user && req.isAuthenticated()) {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  }
