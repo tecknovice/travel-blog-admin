@@ -22,13 +22,20 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Image'
+    },
+    about: {
+        type: String
+    },
+    socials: {
+        type: Map,
+        of: String
     }
 })
 
 
-userSchema.methods.validatePassword = function(password){
-    debug('password',password)
-    debug('this',this)
+userSchema.methods.validatePassword = function (password) {
+    debug('password', password)
+    debug('this', this)
     return bcryptjs.compareSync(password, this.password)
 }
 
