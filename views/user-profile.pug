@@ -1,0 +1,56 @@
+form(method='POST' action='/user/update-profile')
+    .form-group
+        label(for='name') Name*
+        input#name.form-control(type='text' name='name' placeholder='name' value=(current_user.name!=undefined?current_user.name:''))
+    .form-group
+        label(for='email') Email*
+        input#email.form-control(type='text' name='email' placeholder='email' value=(current_user.email!=undefined?current_user.email:''))
+    .form-group
+        label(for='avatar') Avatar
+        input(type='text' name='avatar' id="avatar" value=(current_user.avatar!=undefined?current_user.avatar._id:'') style='display:none;')
+        .image-wrapper(style='margin: 1rem 0;')
+            img#display-image(src=(current_user.avatar!=undefined?'/images/'+current_user.avatar.name:'/images/default-avatar.jpg')  style="max-width:100% !important;max-height:100%  !important; width:auto !important; height: auto !important;")
+        button.btn.btn-primary#open-image-modal(type='button' data-toggle='modal' data-target='#image-modal') Select avatar
+    .form-group
+        label(for='facebook') Facebook
+        if(current_user.socials)
+            input#facebook.form-control(type='text' name='facebook' placeholder='facebook' value=(current_user.socials.get('facebook')!=undefined?current_user.socials.get('facebook'):''))
+        else
+            input#facebook.form-control(type='text' name='facebook' placeholder='facebook')
+    .form-group
+        label(for='instagram') Instagram
+        if(current_user.socials)
+            input#instagram.form-control(type='text' name='instagram' placeholder='instagram' value=(current_user.socials.get('instagram')!=undefined?current_user.socials.get('instagram'):''))
+        else
+            input#instagram.form-control(type='text' name='instagram' placeholder='instagram')
+    .form-group
+        label(for='twitter') Twitter
+        if(current_user.socials)
+            input#twitter.form-control(type='text' name='twitter' placeholder='twitter' value=(current_user.socials.get('twitter')!=undefined?current_user.socials.get('twitter'):''))
+        else
+            input#twitter.form-control(type='text' name='twitter' placeholder='twitter')
+    .form-group
+        label(for='youtube') Youtube
+        if(current_user.socials)
+            input#youtube.form-control(type='text' name='youtube' placeholder='youtube' value=(current_user.socials.get('youtube')!=undefined?current_user.socials.get('youtube'):''))
+        else
+            input#youtube.form-control(type='text' name='youtube' placeholder='youtube')
+    .form-group
+        label(for='editor') About*
+        textarea#editor(name='about', rows='10', cols='80')=(current_user.about!=undefined?current_user.about:'')
+    .form-group
+        button.btn.btn-primary(type='submit' name='action' value='update-profile') Update profile
+        button.btn.btn-danger(type='reset') Cancel
+script(src='/adminlte/bower_components/ckeditor/ckeditor.js')
+script.
+    $(function() {
+        CKEDITOR.replace('editor', {
+            height: '600'
+        })
+    })
+    function callback({selectedImage}) {
+        if (selectedImage) {
+            $('#display-image').attr('src', '/images/' + selectedImage.name);
+            $('#image').val(selectedImage._id)
+        }
+    }

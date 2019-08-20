@@ -1,0 +1,28 @@
+extends layout/base
+
+block content
+  section.content.container-fluid
+    .nav-tabs-custom
+      ul.nav.nav-tabs
+        li.active
+          a(href='#update-profile' data-toggle='tab') Profile
+        li
+          a(href='#change-password' data-toggle='tab') Password
+      .tab-content
+        #update-profile.tab-pane.active
+          include user-profile.pug
+        #change-password.tab-pane
+          include user-password.pug
+block script
+  script.
+    $(function() {
+        $('form').on('submit', function() {
+            $(':input[type="text"]').filter(function(e) {
+                if (this.value.length === 0) {
+                    return true;
+                }
+            }).remove();
+        })
+    })
+block modules
+  include layout/image-modal.pug
