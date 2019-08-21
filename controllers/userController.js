@@ -80,7 +80,7 @@ function isAlreadyLoggedIn(req, res, next) {
 }
 
 exports.update_get = async function (req, res, next) {
-    res.render('user', { title: 'Update user'})
+    res.render('user', { title: 'Update user' })
 }
 
 exports.update_profile_post = [
@@ -123,7 +123,7 @@ exports.change_password_post = [
             throw new Error('New password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters')
         else return true
     }),
-    async function(req,res,next){
+    async function (req, res, next) {
         debug('update_post:req.body', req.body)
         const result = validationResult(req);
         if (!result.isEmpty()) {
@@ -137,7 +137,7 @@ exports.change_password_post = [
                 res.render('user', { title: 'Update user', warning_messages: ['Wrong current password'] })
                 return
             }
-            user.setPassword(req.body.new_password);
+            await user.setPassword(req.body.new_password)
             await User.findByIdAndUpdate(req.user._id, user)
             res.redirect('/user/update')
         } catch (error) {
