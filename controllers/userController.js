@@ -80,6 +80,7 @@ function isAlreadyLoggedIn(req, res, next) {
 }
 
 exports.update_get = async function (req, res, next) {
+    debug('update_Get:res.locals.current_user',res.locals.current_user)
     res.render('user', { title: 'Update user' })
 }
 
