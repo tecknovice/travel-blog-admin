@@ -80,8 +80,7 @@ function isAlreadyLoggedIn(req, res, next) {
 }
 
 exports.update_get = async function (req, res, next) {
-    const user = await User.findById(req.user._id).populate('avatar')
-    res.render('user', { title: 'Update user', user})
+    res.render('user', { title: 'Update user'})
 }
 
 exports.update_profile_post = [
