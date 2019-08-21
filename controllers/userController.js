@@ -85,7 +85,7 @@ exports.update_get = async function (req, res, next) {
 
 exports.update_profile_post = [
     body('name', 'Name is required').isLength({ min: 1 }),
-    body('email', 'Email is invalid').isEmail(),
+    body('email', 'Email is invalid').isEmail().trim(),
     body('avatar', 'Avatar must be image ObjectId').optional().isMongoId(),
     body('about', 'About is at least 500 characters').isLength({ min: 500 }),
     async function (req, res, next) {
@@ -96,12 +96,14 @@ exports.update_profile_post = [
             return
         }
         try {
+          if(req.body.email != req.user.email){
             const foundUser = await User.findOne({ email: req.body.email })
             if (foundUser) {
                 res.render('user', { title: 'Update user', warning_messages: ['Email has already taken'] })
                 return
             }
-            const user = new User({
+          }
+                const user = new User({
                 _id: req.user._id,
                 name: req.body.name,
                 email: req.body.email,
