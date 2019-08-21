@@ -96,6 +96,11 @@ exports.update_profile_post = [
             return
         }
         try {
+            const foundUser = await User.findOne({ email: req.body.email })
+            if (foundUser) {
+                res.render('user', { title: 'Update user', warning_messages: ['Email has already taken'] })
+                return
+            }
             const user = new User({
                 _id: req.user._id,
                 name: req.body.name,
