@@ -15,6 +15,7 @@ const userRouter = require('./routes/userRouter')
 const tagRouter = require('./routes/tagRouter')
 const postRouter = require('./routes/postRouter')
 const commentRouter = require('./routes/commentRouter')
+const replyRouter = require('./routes/replyRouter')
 
 const app = express();
 app.use(helmet());
@@ -55,6 +56,7 @@ app.use('/user', userRouter)
 app.use('/tag', tagRouter)
 app.use('/post', postRouter)
 app.use('/comment', commentRouter)
+app.use('/reply', replyRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

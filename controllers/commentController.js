@@ -1,7 +1,6 @@
 const debug = require('debug')('travel-blog-admin:commentController')
 const { body, validationResult } = require('express-validator');
 const Comment = require('../models/Comment')
-const async = require('async')
 
 exports.approved_get = async function (req, res, next) {
     const comments = await Comment
