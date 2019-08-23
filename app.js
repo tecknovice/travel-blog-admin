@@ -9,11 +9,12 @@ const helmet = require('helmet');
 
 require('./config/db')
 
-const indexRouter = require('./routes/index');
-const userRouter = require('./routes/userRouter');
-const postRouter = require('./routes/postRouter')
+const indexRouter = require('./routes/index')
 const imageRouter = require('./routes/imageRouter')
+const userRouter = require('./routes/userRouter')
 const tagRouter = require('./routes/tagRouter')
+const postRouter = require('./routes/postRouter')
+const commentRouter = require('./routes/commentRouter')
 
 const app = express();
 app.use(helmet());
@@ -49,10 +50,11 @@ app.use(function (req, res, next) {
 app.use(authRouter);
 
 app.use('/', indexRouter)
-app.use('/user', userRouter)
 app.use('/image', imageRouter)
+app.use('/user', userRouter)
 app.use('/tag', tagRouter)
 app.use('/post', postRouter)
+app.use('/comment', commentRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

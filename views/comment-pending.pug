@@ -1,0 +1,14 @@
+extends layout/base
+
+block content
+    section.content.container-fluid
+        if(comments)
+            form#form(method='POST')
+                .box.box-solid
+                    .box-header
+                        button.btn.btn-primary(type='submit' name='action' value='approve') Approve
+                        button.btn.btn-danger(type='submit'  name='action' value='delete') Delete
+                    .box-body.table-responsive
+                        include comment-list.pug 
+        else
+            .center-block.bg-info.text-center No pending comment  

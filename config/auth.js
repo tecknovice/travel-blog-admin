@@ -13,7 +13,7 @@ const session = ExpressSession({
     saveUninitialized: true,
     store: new MongoStore({
         url: process.env.MONGODB_URL,
-        ttl: 24 * 60 * 60 // 1 day
+        ttl: 60 * 60 // 1 day
     })
     // cookie: { secure: true }
 })
