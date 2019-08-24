@@ -2,10 +2,11 @@ const path = require('path')
 const gulp = require('gulp')
 const imagemin = require('gulp-imagemin')
 const imageminMozjpeg = require('imagemin-mozjpeg')
-const source = path.join(__dirname, 'public', 'temp' ,'images', '*')
+const source = path.join(__dirname, 'public', 'temp', 'images', '*')
 const dest = path.join(__dirname, 'public', 'images')
 const globby = require('globby')
 const del = require('del')
+const debug = require('debug')('travel-blog-admin:gulp')
 
 // Array.prototype.diff = function (a) {
 //     return this.filter(function (i) { return a.indexOf(i) < 0; });
@@ -26,6 +27,7 @@ const del = require('del')
 
 async function imageclean() {
     let deleteFiles = await globby(source)
+    debug('deleteFiles', deleteFiles)
     await del(deleteFiles)
 }
 function imageminify() {
