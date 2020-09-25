@@ -2,26 +2,33 @@ const path = require('path')
 const gulp = require('gulp')
 const imagemin = require('gulp-imagemin')
 const imageminMozjpeg = require('imagemin-mozjpeg')
-const source = path.join(__dirname, 'public', 'temp' ,'images', '*')
+const source = path.join(__dirname, 'public', 'temp', 'images', '*')
 const dest = path.join(__dirname, 'public', 'images')
 const globby = require('globby')
 const del = require('del')
+const debug = require('debug')('travel-blog-admin:gulp')
 
-Array.prototype.diff = function (a) {
-    return this.filter(function (i) { return a.indexOf(i) < 0; });
-};
+// Array.prototype.diff = function (a) {
+//     return this.filter(function (i) { return a.indexOf(i) < 0; });
+// };
+
+// async function imageclean() {
+
+//     let sourceFiles = await globby(source)
+//     sourceFiles = sourceFiles.map(file => file.match(/[^/]+$/)[0])
+//     let destFiles = await globby(dest)
+//     destFiles = destFiles.map(file => file.match(/[^/]+$/)[0])
+
+//     let deleteFiles = destFiles.diff(sourceFiles)
+//     deleteFiles = deleteFiles.map(file => path.join(dest, file))
+//     const deletedPaths = await del(deleteFiles)
+
+// }
 
 async function imageclean() {
-
-    let sourceFiles = await globby(source)
-    sourceFiles = sourceFiles.map(file => file.match(/[^/]+$/)[0])
-    let destFiles = await globby(dest)
-    destFiles = destFiles.map(file => file.match(/[^/]+$/)[0])
-
-    let deleteFiles = destFiles.diff(sourceFiles)
-    deleteFiles = deleteFiles.map(file => path.join(dest, file))
-    const deletedPaths = await del(deleteFiles)
-
+    let deleteFiles = await globby(source)
+    debug('deleteFiles', deleteFiles)
+    await del(deleteFiles)
 }
 function imageminify() {
     return gulp.src(source)

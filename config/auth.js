@@ -13,7 +13,7 @@ const session = ExpressSession({
     saveUninitialized: true,
     store: new MongoStore({
         url: process.env.MONGODB_URL,
-        ttl: 24 * 60 * 60 // 1 day
+        ttl: 60 * 60 // 1 day
     })
     // cookie: { secure: true }
 })
@@ -48,12 +48,12 @@ passport.serializeUser(function (user, callback) {
 });
 
 passport.deserializeUser(function (id, callback) {
-    User.findById(id, function (err, user) {
+    User.findById(id).populate('avatar').exec(function (err, user) {
         if (err) {
             return callback(err);
         }
         callback(null, user);
-    });
+    })
 });
 
 const authRouter = router.use(/^(?!.*(\/user\/login))/, function (req, res, next) {

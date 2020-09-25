@@ -1,0 +1,13 @@
+extends layout/base
+
+block content
+    section.content.container-fluid
+        if(replies)
+            form#form(method='POST' action='/reply/delete')
+                .box.box-solid
+                    .box-header
+                        button.btn.btn-danger(type='submit') Delete
+                    .box-body.table-responsive
+                        include reply-list.pug 
+        else
+            .center-block.bg-info.text-center No approved reply  

@@ -4,12 +4,13 @@ const fs = require('fs')
 const { body, query, validationResult } = require('express-validator');
 const debug = require('debug')('travel-blog-admin:imageController')
 const path = require('path');
-const dest = path.join(__dirname, '..','public','temp','images','/')
+const temp = path.join(__dirname, '..','public','temp','images','/')
+const dest = path.join(__dirname, '..','public','images','/')
 const Image = require('../models/Image')
 const imagePerPage = 8
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, dest)
+        cb(null, temp)
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname)
@@ -34,7 +35,6 @@ exports.upload_get = function (req, res) {
 exports.upload_post = [
     upload.single('image'),
     async (req, res, next) => {
-        debug('upload_post:dest',dest)
         const d = dimensions(req.file.path)
         const image = new Image({
             title: req.file.originalname,
