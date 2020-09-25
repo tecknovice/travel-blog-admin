@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const compression = require('compression');
 const helmet = require('helmet');
+const debug = require("debug")('travel-blog-admin:app');
 // const flash = require('express-flash')
 
 require('./config/db')
@@ -44,6 +45,7 @@ app.use(passport.session());
 app.use(function (req, res, next) {
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.current_user = req.user;
+  debug("current_user",res.locals.current_user);
   next();
 });
 
