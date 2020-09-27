@@ -31,7 +31,7 @@ block content
                                     td
                                         .image-wrapper
                                             if(tag.image)
-                                                img(src=`${static_server}/images/${tag.image.name}` alt=tag.image.title)
+                                                img(src=`${image_path}${tag.image.name}` alt=tag.image.title)
                                             else
                                                 h1 No image
                                     td=tag.total_posts||0

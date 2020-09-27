@@ -45,7 +45,7 @@ app.use(passport.session());
 app.use(function (req, res, next) {
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.current_user = req.user;
-  res.locals.static_server = process.env.STATIC_SERVER || ""
+  res.locals.image_path = `${process.env.STATIC_SERVER}/images/`;
   next();
 });
 

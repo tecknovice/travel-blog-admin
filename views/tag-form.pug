@@ -5,12 +5,12 @@
   label(for='image_id') Tag image 
   input(type='text' name='image_id' id="image_id" value=(image!=undefined?image._id:'') style='display:none;')
   .image-wrapper(style='margin: 1rem 0;')
-    img#display-image(src=(image!=undefined?'/images/'+image.name:'')  style="max-width:100% !important;max-height:100%  !important; width:auto !important; height: auto !important;")
+    img#display-image(src=(image!=undefined?image_path+image.name:'')  style="max-width:100% !important;max-height:100%  !important; width:auto !important; height: auto !important;")
   button.btn.btn-primary#open-image-modal(type='button' data-toggle='modal' data-target='#image-modal') Select image
 script.
   function callback({selectedImage}){
     if(selectedImage){
-      $('#display-image').attr('src', '/images/'+selectedImage.name);
+      $('#display-image').attr('src', "https://static.thesologuy.info/images/"+selectedImage.name);
       $('#image_id').val(selectedImage._id)
     }
   }

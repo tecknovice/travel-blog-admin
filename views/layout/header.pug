@@ -20,13 +20,13 @@ header.main-header
           // Menu Toggle Button
           a.dropdown-toggle(href='#', data-toggle='dropdown')
             // The user image in the navbar
-            img.user-image(src=(current_user.avatar!=undefined?`${static_server}/images/${current_user.avatar.name}`:'/images/default-avatar.jpg'), alt='User Image')
+            img.user-image(src=(current_user.avatar!=undefined?`${image_path}${current_user.avatar.name}`:image_path+'default-avatar.jpg'), alt='User Image')
             // hidden-xs hides the username on small devices so only the image appears.
             span.hidden-xs=current_user.name
           ul.dropdown-menu
             // The user image in the menu
             li.user-header
-              img.img-circle(src=(current_user.avatar!=undefined?`${static_server}/images/${current_user.avatar.name}`:'/images/default-avatar.jpg') alt='User Image')
+              img.img-circle(src=(current_user.avatar!=undefined?`${image_path}${current_user.avatar.name}`:image_path+'default-avatar.jpg') alt='User Image')
               p=current_user.name
                 small=current_user.email
             // Menu Footer

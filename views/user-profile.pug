@@ -9,7 +9,7 @@ form(method='POST' action='/user/update-profile')
         label(for='avatar') Avatar
         input(type='text' name='avatar' id="avatar" value=(current_user.avatar!=undefined?current_user.avatar._id:'') style='display:none;')
         .image-wrapper(style='margin: 1rem 0;')
-            img#display-image(src=(current_user.avatar!=undefined?'/images/'+current_user.avatar.name:'/images/default-avatar.jpg')  style="max-width:100% !important;max-height:100%  !important; width:auto !important; height: auto !important;")
+            img#display-image(src=(current_user.avatar!=undefined?image_path+current_user.avatar.name:image_path+'default-avatar.jpg')  style="max-width:100% !important;max-height:100%  !important; width:auto !important; height: auto !important;")
         button.btn.btn-primary#open-image-modal(type='button' data-toggle='modal' data-target='#image-modal') Select avatar
     .form-group
         label(for='facebook') Facebook
@@ -50,7 +50,7 @@ script.
     })
     function callback({selectedImage}) {
         if (selectedImage) {
-            $('#display-image').attr('src', '/images/' + selectedImage.name);
+            $('#display-image').attr('src', image_path + selectedImage.name);
             $('#avatar').val(selectedImage._id)
         }
     }
