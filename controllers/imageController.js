@@ -4,8 +4,9 @@ const fs = require('fs')
 const { body, query, validationResult } = require('express-validator');
 const debug = require('debug')('travel-blog-admin:imageController')
 const path = require('path');
-const temp = path.join(__dirname, '..','public','temp','images','/')
-const dest = path.join(__dirname, '..','public','images','/')
+const temp = path.join(__dirname,"../..","travel-blog-static","static",'temp','images','/')
+const dest = path.join(__dirname,"../..","travel-blog-static","static",'images','/')
+debug("process.cwd()",process.cwd())
 const Image = require('../models/Image')
 const imagePerPage = 8
 const storage = multer.diskStorage({
@@ -20,7 +21,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage,
     limits: {
-        fileSize: 10000000
+        fileSize: 100000000
     },
     fileFilter(req, file, callback) {
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) return callback(new Error('Please upload image'))
