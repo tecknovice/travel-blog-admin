@@ -50,7 +50,7 @@ script.
     })
     function callback({selectedImage}) {
         if (selectedImage) {
-            $('#display-image').attr('src', image_path + selectedImage.name);
+            $('#display-image').attr('src', "https://static.thesologuy.info/images/" + selectedImage.name);
             $('#avatar').val(selectedImage._id)
         }
     }
