@@ -6,7 +6,6 @@ const debug = require('debug')('travel-blog-admin:imageController')
 const path = require('path');
 const temp = path.join(__dirname,"../..","travel-blog-static","static",'temp','images','/')
 const dest = path.join(__dirname,"../..","travel-blog-static","static",'images','/')
-debug("process.cwd()",process.cwd())
 const Image = require('../models/Image')
 const imagePerPage = 8
 const storage = multer.diskStorage({
