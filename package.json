@@ -1,6 +1,6 @@
 {
   "name": "travel-blog-admin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "debug": "DEBUG=travel-blog-admin:* env-cmd -f ./config/config.env nodemon ./bin/www",
