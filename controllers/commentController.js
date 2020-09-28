@@ -6,7 +6,8 @@ exports.approved_get = async function (req, res, next) {
     const comments = await Comment
         .find({ status: 'approved' })
         .sort({ commentedTime: 'asc' })
-        .populate('post', 'title')
+        .populate({ path: 'post', select: 'title' })
+        .populate('totalReply');
     res.render('comment-approved', { title: 'Approved comments', comments, status: 'approved' })
 }
 exports.delete_post = async function (req, res, next) {

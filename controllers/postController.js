@@ -1,6 +1,7 @@
 const debug = require('debug')('travel-blog-admin:postController')
 const { body, param, validationResult } = require('express-validator');
 const Post = require('../models/Post')
+const Comment = require('../models/Comment')
 const Tag = require('../models/Tag')
 const Image = require('../models/Image')
 const async = require('async')
@@ -175,7 +176,7 @@ exports.update_post = [
 
 exports.published_get = async function (req, res, next) {
     try {
-        const posts = await Post.find({ status: 'published' }).populate('tags').exec()
+        const posts = await Post.find({ status: 'published' }).populate(['tags','totalComment']).exec()
         res.render('post-published', { title: 'Published posts', posts, status: 'published' })
         return
     } catch (error) {
@@ -215,7 +216,7 @@ exports.published_post = [
 ]
 exports.draft_get = async function (req, res, next) {
     try {
-        const posts = await Post.find({ status: 'draft' }).populate('tags').exec()
+        const posts = await Post.find({ status: 'draft' }).populate(['tags','totalComment']).exec()
         res.render('post-draft', { title: 'Draft posts', posts, status: 'draft' })
         return
     } catch (error) {

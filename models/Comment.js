@@ -38,6 +38,14 @@ commentSchema
     .get(function () {
         return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss')
     });
+// Virtual for total replies
+commentSchema
+.virtual('totalReply', {
+    ref: 'Reply',
+    localField: '_id', 
+    foreignField: 'comment', 
+    count: true
+  })
 const Comment = mongoose.model('Comment', commentSchema)
 
 module.exports = Comment

@@ -27,10 +27,12 @@ table#data-table.table.table-hover.table-bordered
                 td
                     div
                         i.fa.fa-eye
+                        span &nbsp;
                         span 9999
                     div
                         i.fa.fa-comment
-                        span 9999
+                        span &nbsp;
+                        span=post.totalComment
                 if (status=='published')
                     td=post.publishedTime
 

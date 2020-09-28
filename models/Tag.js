@@ -14,6 +14,15 @@ const tagSchema = new mongoose.Schema({
         ref:'Image'
     }
 })
+// Virtual for total comments
+tagSchema
+.virtual('totalPost', {
+    ref: 'Post',
+    localField: '_id', 
+    foreignField: 'tags', 
+    count: true
+  })
+  
 const Tag = mongoose.model('Tag', tagSchema)
 
 module.exports = Tag

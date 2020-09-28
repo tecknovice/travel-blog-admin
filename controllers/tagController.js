@@ -1,6 +1,7 @@
 const debug = require('debug')('travel-blog-admin:tagController')
 const { body, param, validationResult } = require('express-validator');
 const Tag = require('../models/Tag')
+
 exports.create_get = function (req, res, next) {
     res.render('tag-create', { title: 'Create tag' })
 }
@@ -85,8 +86,6 @@ exports.delete = async function (req, res, next) {
     }
 }
 exports.list = async function (req, res, next) {
-    const tags = await Tag.find().populate({
-        path: 'image',
-    }).exec()
+    const tags = await Tag.find().populate(['image','totalPost']).exec()
     res.render('tag-list', { title: 'Tags list', tags })
 }

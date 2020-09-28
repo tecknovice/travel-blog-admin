@@ -45,6 +45,14 @@ postSchema
 .get(function () {
   return moment(this.updatedAt).format('YYYY-MM-DD HH:mm:ss')
 });
+// Virtual for total comments
+postSchema
+.virtual('totalComment', {
+    ref: 'Comment',
+    localField: '_id', 
+    foreignField: 'post', 
+    count: true
+  })
 const Post = mongoose.model('Post', postSchema)
 
 module.exports = Post
