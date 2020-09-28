@@ -26,7 +26,8 @@ const postSchema = new mongoose.Schema({
         default: 'draft'
     },
     views:{
-        type: Number
+        type: Number,
+        default: 0
     }
 },
     {
